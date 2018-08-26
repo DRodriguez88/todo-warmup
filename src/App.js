@@ -3,27 +3,20 @@ import React, { Component, Fragment } from "react";
 class App extends Component {
   state = { list: [] };
 
-  handleChange = newValue => this.setState({ newItem: newValue });
+  handleChange = newValue => this.setState({ newItem: newValue }); //The value of the input is saved to state
+
   handleAdd = () => {
-    this.state.newItem &&
-      this.setState({
-        list: [...this.state.list.slice(), this.state.newItem],
-        newItem: null
-      });
+    //The value saved in state is added to the list in state
+    this.setState({
+      list: [...this.state.list.slice(), this.state.newItem],
+      newItem: null
+    });
   };
-  handleDelete = idx => {
-    const newList = this.state.list.slice();
-    newList.splice(idx, 1);
-    this.setState({ list: newList });
-  };
-  handleEditClick = idx => {
-    this.setState({ isEditing: idx });
-  };
-  handleSave = idx => {
-    const newList = this.state.list.slice();
-    newList.splice(idx, 1, this.state.newItem);
-    this.setState({ list: newList, isEditing: null });
-  };
+  handleDelete = () => {}; //Remove an item from the list in state
+
+  handleEditClick = () => {}; //Toggle visibility of #editInput and #saveEditValue
+
+  handleSave = () => {}; //The value saved in state replaces a value in the list in state
 
   render() {
     const { list, isEditing } = this.state;
@@ -58,14 +51,12 @@ const Items = ({
     {list.map((item, idx) => (
       <li key={idx}>
         {item}
-        <button onClick={() => onEditClick(idx)}>Edit</button>
-        <button onClick={() => onDelete(idx)}>Delete</button>
-        {isEditing === idx && (
-          <Fragment>
-            <input onChange={e => onChange(e.target.value)} />
-            <button onClick={onSave}>Save</button>
-          </Fragment>
-        )}
+        <button id="editButton">Edit</button>
+        <button id="deleteButton">Delete</button>
+        <Fragment>
+          <input id="editInput" />
+          <button id="saveEditValue">Save</button>
+        </Fragment>
       </li>
     ))}
   </ul>
